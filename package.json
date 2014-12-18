@@ -1,0 +1,20 @@
+{
+  "name": "kinda-store-web-sql",
+  "version": "0.1.0",
+  "description": "...",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kinda/kinda-store-web-sql"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manuel Vila <mvila@3base.com>",
+  "license": "MIT",
+  "dependencies": {
+    "kinda-store-sql": "https://github.com/kinda/kinda-store-sql/tarball/master",
+    "kinda-util": "https://github.com/kinda/kinda-util/tarball/master",
+    "kinda-web-sql": "https://github.com/kinda/kinda-web-sql/tarball/master"
+  }
+}
