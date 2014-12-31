@@ -13,8 +13,8 @@
   "author": "Manuel Vila <mvila@3base.com>",
   "license": "MIT",
   "dependencies": {
-    "kinda-store-sql": "https://github.com/kinda/kinda-store-sql/tarball/master",
-    "kinda-util": "https://github.com/kinda/kinda-util/tarball/master",
-    "kinda-web-sql": "https://github.com/kinda/kinda-web-sql/tarball/master"
+    "kinda-store-sql": "kinda/kinda-store-sql",
+    "kinda-util": "kinda/kinda-util",
+    "kinda-web-sql": "kinda/kinda-web-sql"
   }
 }
