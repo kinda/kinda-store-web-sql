@@ -2,7 +2,7 @@
 
 var util = require('kinda-util').create();
 var WebSQL = require('kinda-web-sql');
-var SQLStore = require('kinda-store-sql');
+var SQLStore = require('kinda-sql-store');
 
 var WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   this.setCreator(function(url, options) {
