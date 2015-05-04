@@ -26,14 +26,17 @@ var WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   };
 
   this.transaction = function *(fn, options) {
-    if (this.store !== this)
-      return yield fn(this); // we are already in a transaction
+    if (this.isInsideTransaction()) return yield fn(this);
     yield this.initializeDatabase();
     return yield this.connection.transaction(function *(tr) {
       var transaction = Object.create(this);
       transaction.connection = tr;
       return yield fn(transaction);
     }.bind(this), options);
+  };
+
+  this.isInsideTransaction = function() {
+    return this !== this.store;
   };
 });
 
