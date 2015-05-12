@@ -2,14 +2,21 @@
 
 var util = require('kinda-util').create();
 var WebSQL = require('kinda-web-sql');
+var CordovaSQLite = require('kinda-cordova-sqlite');
 var SQLStore = require('kinda-sql-store');
 
 var WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   this.setCreator(function(url, options) {
     var name = url;
-    if (util.startsWith(name, 'websql:'))
+    if (util.startsWith(name, 'websql:')) {
       name = name.substr('websql:'.length);
-    this.connection = WebSQL.create(name, options);
+      this.connection = WebSQL.create(name, options);
+    } else if (util.startsWith(name, 'sqlite:')) {
+      name = name.substr('sqlite:'.length);
+      this.connection = CordovaSQLite.create(name, options);
+    } else {
+      throw new Error('invalid url');
+    }
     this.store = this;
     this.setOptions(options);
   });
