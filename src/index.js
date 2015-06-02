@@ -33,7 +33,7 @@ let WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   };
 
   this.transaction = function *(fn, options) {
-    if (this.isInsideTransaction()) return yield fn(this);
+    if (this.isInsideTransaction) return yield fn(this);
     yield this.initializeDatabase();
     return yield this.connection.transaction(function *(tr) {
       let transaction = Object.create(this);
@@ -41,10 +41,12 @@ let WebSQLStore = SQLStore.extend('WebSQLStore', function() {
       return yield fn(transaction);
     }.bind(this), options);
   };
-
-  this.isInsideTransaction = function() {
-    return this !== this.store;
-  };
+  
+  Object.defineProperty(this, 'isInsideTransaction', {
+    get() {
+      return this !== this.store;
+    }
+  });
 });
 
 module.exports = WebSQLStore;
