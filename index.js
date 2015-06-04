@@ -33,6 +33,7 @@ var WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   };
 
   this.transaction = function *(fn, options) {
+    return yield fn(this); // FIXME: remove this to enable transactions
     if (this.isInsideTransaction()) return yield fn(this);
     yield this.initializeDatabase();
     return yield this.connection.transaction(function *(tr) {
