@@ -19,7 +19,7 @@
   "author": "Manuel Vila <mvila@3base.com>",
   "license": "MIT",
   "dependencies": {
-    "kinda-cordova-sqlite": "^0.2.0",
+    "kinda-cordova-sqlite": "^0.3.0",
     "kinda-sql-store": "^0.2.0",
     "kinda-web-sql": "^0.2.0",
     "lodash": "^3.9.1"
