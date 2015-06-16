@@ -11,6 +11,7 @@ let WebSQLStore = SQLStore.extend('WebSQLStore', function() {
     if (_.startsWith(options.url, 'websql:')) {
       options.name = options.url.substr('websql:'.length);
       this.connection = WebSQL.create(options);
+      this.transactionsAreDisabled = true;
     } else if (_.startsWith(options.url, 'sqlite:')) {
       options.name = options.url.substr('sqlite:'.length);
       this.connection = CordovaSQLite.create(options);
@@ -33,8 +34,9 @@ let WebSQLStore = SQLStore.extend('WebSQLStore', function() {
   };
 
   this.transaction = function *(fn, options) {
-    return yield fn(this); // FIXME: remove this to enable transactions
-    if (this.isInsideTransaction) return yield fn(this);
+    if (this.transactionsAreDisabled || this.isInsideTransaction) {
+      return yield fn(this);
+    }
     yield this.initializeDatabase();
     return yield this.connection.transaction(function *(tr) {
       let transaction = Object.create(this);
