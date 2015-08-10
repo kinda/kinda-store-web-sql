@@ -22,26 +22,26 @@ let WebSQLStore = SQLStore.extend('WebSQLStore', function() {
     this.setOptions(options);
   };
 
-  this.initializeDatabase = function *() {
+  this.initializeDatabase = async function() {
     if (this.store.databaseHasBeenInitialized) return;
     let sql = 'CREATE TABLE IF NOT EXISTS `pairs` (';
     sql += '`key` longblob NOT NULL, ';
     sql += '`value` longblob, ';
     sql += 'PRIMARY KEY (`key`)';
     sql += ');';
-    yield this.connection.query(sql);
+    await this.connection.query(sql);
     this.store.databaseHasBeenInitialized = true;
   };
 
-  this.transaction = function *(fn, options) {
+  this.transaction = async function(fn, options) {
     if (this.transactionsAreDisabled || this.isInsideTransaction) {
-      return yield fn(this);
+      return await fn(this);
     }
-    yield this.initializeDatabase();
-    return yield this.connection.transaction(function *(tr) {
+    await this.initializeDatabase();
+    return await this.connection.transaction(async function(tr) {
       let transaction = Object.create(this);
       transaction.connection = tr;
-      return yield fn(transaction);
+      return await fn(transaction);
     }.bind(this), options);
   };
 
